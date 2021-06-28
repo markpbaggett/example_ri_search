@@ -197,7 +197,7 @@ class TuplesSearch(ResourceIndexSearch):
 
     def get_duration_information(self):
         sparql_query = self.escape_query(
-            f"PREFIX bibframe: <http://id.loc.gov/ontologies/bibframe/#> SELECT $pid_and_datastream $duraction FROM <#ri> WHERE {{ $pid_and_datastream "
+            f"PREFIX bibframe: <http://id.loc.gov/ontologies/bibframe/#> SELECT $pid_and_datastream $duration FROM <#ri> WHERE {{ $pid_and_datastream "
             f"bibframe:duration $duration  . }}"
         )
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
@@ -206,3 +206,4 @@ class TuplesSearch(ResourceIndexSearch):
 
 if __name__ == "__main__":
     x = TuplesSearch(language="sparql").get_duration_information()
+    print(x)

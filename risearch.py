@@ -202,3 +202,7 @@ class TuplesSearch(ResourceIndexSearch):
         )
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return results
+
+
+if __name__ == "__main__":
+    x = TuplesSearch(language="sparql").get_duration_information()

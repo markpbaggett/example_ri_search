@@ -203,7 +203,14 @@ class TuplesSearch(ResourceIndexSearch):
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return results
 
+    def get_content_models(self):
+        sparql_query = self.escape_query(
+            f"PREFIX rels-ext: <info:fedora/fedora-system:def/relations-external#> PREFIX model: <info:fedora/fedora-system:def/model#> SELECT DISTINCT $model FROM <#ri> WHERE {{ ?pid rels-ext:isMemberOfCollection <info:fedora/collections:rfta>; model:hasModel ?model . }}"
+        )
+        results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
+        return results
+
 
 if __name__ == "__main__":
-    x = TuplesSearch(language="sparql").get_duration_information()
+    x = TuplesSearch(language="sparql").get_content_models()
     print(x)

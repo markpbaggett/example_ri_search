@@ -233,5 +233,5 @@ class TuplesSearch(ResourceIndexSearch):
 
 
 if __name__ == "__main__":
-    x = TuplesSearch(language="sparql").get_content_models()
+    x = TuplesSearch(language="sparql").get_embargo_until_dates()
     print(x)

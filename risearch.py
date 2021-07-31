@@ -226,7 +226,7 @@ class TuplesSearch(ResourceIndexSearch):
 
     def get_embargo_until_dates(self):
         sparql_query = self.escape_query(
-            f"""PREFIX embargo: <info:islandora/islandora-system:def/scholar#> SELECT (REPLACE($pid, "info:fedora/", "")) $date FROM <#ri> WHERE {{ ?pid embargo:embargo-until ?date . }}"""
+            f"""PREFIX embargo: <info:islandora/islandora-system:def/scholar#> SELECT $pid $date FROM <#ri> WHERE {{ ?pid embargo:embargo-until ?date . }}"""
         )
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return results

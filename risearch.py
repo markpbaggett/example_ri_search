@@ -233,7 +233,7 @@ class TuplesSearch(ResourceIndexSearch):
 
     def get_label(self, pid):
         sparql_query = self.escape_query(
-            f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#label> SELECT $label FROM <#ri> WHERE {{ <info:fedora/{pid}> fmodel:label ?label . }}"""
+            f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#> SELECT $label FROM <#ri> WHERE {{ <info:fedora/{pid}> fmodel:label ?label . }}"""
         )
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return results

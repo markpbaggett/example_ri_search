@@ -231,6 +231,13 @@ class TuplesSearch(ResourceIndexSearch):
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return results
 
+    def get_label(self, pid):
+        sparql_query = self.escape_query(
+            f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#label> SELECT $label FROM <#ri> WHERE {{ <info:fedora/{pid}> fmodel:label ?label . }}"""
+        )
+        results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
+        return results
+
 
 if __name__ == "__main__":
     x = TuplesSearch(language="sparql").get_embargo_until_dates()

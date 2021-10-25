@@ -238,7 +238,18 @@ class TuplesSearch(ResourceIndexSearch):
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return results
 
+    def find_rfta_objects_without_transcripts(self, pid):
+        return
+
+    def find_books_in_commencements(self):
+        sparql_query = self.escape_query(
+            f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#> PREFIX fedora: <info:fedora/fedora-system:def/relations-external#> SELECT $pid FROM <#ri> WHERE {{ ?pid fedora:isMemberOfCollection <info:fedora/collections:utkcomm> . }}"""
+        )
+        results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
+        return results
+
+
 
 if __name__ == "__main__":
-    x = TuplesSearch(language="sparql").get_embargo_until_dates()
+    x = TuplesSearch(language="sparql").find_books_in_commencements()
     print(x)

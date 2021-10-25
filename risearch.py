@@ -243,7 +243,7 @@ class TuplesSearch(ResourceIndexSearch):
 
     def find_books_in_commencements(self, collection):
         sparql_query = self.escape_query(
-            f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#> PREFIX fedora: <info:fedora/fedora-system:def/relations-external#> SELECT $pid FROM <#ri> WHERE {{ ?pid fedora:isMemberOfCollection <info:fedora/{collection}> ; fmodel:hasModel <info:fedora/islandora:bookCMode> . }}"""
+            f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#> PREFIX fedora: <info:fedora/fedora-system:def/relations-external#> SELECT $pid FROM <#ri> WHERE {{ ?pid fedora:isMemberOfCollection <info:fedora/{collection}> ; fmodel:hasModel <info:fedora/islandora:bookCModel> . }}"""
         )
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return results

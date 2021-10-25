@@ -241,7 +241,7 @@ class TuplesSearch(ResourceIndexSearch):
     def find_rfta_objects_without_transcripts(self, pid):
         return
 
-    def find_books_in_commencements(self, collection):
+    def find_books_in_collection(self, collection):
         sparql_query = self.escape_query(
             f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#> PREFIX fedora: <info:fedora/fedora-system:def/relations-external#> SELECT $pid FROM <#ri> WHERE {{ ?pid fedora:isMemberOfCollection <info:fedora/{collection}> ; fmodel:hasModel <info:fedora/islandora:bookCModel> . }}"""
         )

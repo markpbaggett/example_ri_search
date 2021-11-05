@@ -248,8 +248,13 @@ class TuplesSearch(ResourceIndexSearch):
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return results
 
-
+    def get_all_collections(self):
+        sparql_query = self.escape_query(
+            f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#> PREFIX fedora: <info:fedora/fedora-system:def/relations-external#> SELECT $pid FROM <#ri> WHERE {{ ?pid fmodel:hasModel <info:fedora/islandora:collectionCModel> . }}"""
+        )
+        results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
+        return results
 
 if __name__ == "__main__":
-    x = TuplesSearch(language="sparql").find_books_in_collection('collections:utkcomm')
+    x = TuplesSearch(language="sparql").get_all_collections()
     print(x)

@@ -239,6 +239,10 @@ class TuplesSearch(ResourceIndexSearch):
         return results
 
     def find_rfta_objects_without_transcripts(self, pid):
+        sparql_query = self.escape_query(
+            f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#> SELECT $ FROM <#ri> WHERE {{ <info:fedora/{pid}> fmodel:label ?label . }}"""
+        )
+        results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return
 
     def find_books_in_collection(self, collection):
@@ -251,6 +255,13 @@ class TuplesSearch(ResourceIndexSearch):
     def get_all_collections(self):
         sparql_query = self.escape_query(
             f"""PREFIX fmodel: <info:fedora/fedora-system:def/model#> PREFIX fedora: <info:fedora/fedora-system:def/relations-external#> SELECT $pid FROM <#ri> WHERE {{ ?pid fmodel:hasModel <info:fedora/islandora:collectionCModel> . }}"""
+        )
+        results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
+        return results
+
+    def get_rfta_audio(self):
+        sparql_query = self.escape_query(
+            f"PREFIX rels-ext: <info:fedora/fedora-system:def/relations-external#> PREFIX model: <info:fedora/fedora-system:def/model#> SELECT $pid FROM <#ri> WHERE {{ ?pid rels-ext:isMemberOfCollection <info:fedora/collections:rfta>; model:hasModel <info:fedora/islandora:sp-audioCModel> . }}"
         )
         results = requests.get(f"{self.base_url}&query={sparql_query}").content.decode('utf-8')
         return results
